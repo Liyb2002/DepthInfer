@@ -14,7 +14,7 @@ import model
 HEIGHT = 256
 WIDTH = 256
 LR = 0.0002
-EPOCHS = 30
+EPOCHS = 10
 BATCH_SIZE = 32
 
 df = dataGen.load_data()
@@ -31,16 +31,19 @@ optimizer = tf.keras.optimizers.Adam(
     amsgrad=False,
 )
 model = model.DepthEstimationModel()
+
 model.compile(optimizer)
 
 train_loader = dataGen.DataGenerator(
     data=df[:100].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
 )
 validation_loader = dataGen.DataGenerator(
-    data=df[110:120].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
+    data=df[100:110].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
 )
 model.fit(
     train_loader,
     epochs=EPOCHS,
     validation_data=validation_loader,
 )
+
+model.save_weights('path_to_my_weights.h5', save_format='tf')
