@@ -36,6 +36,8 @@ def load_data():
     df = df.sample(frac=1, random_state=42)
     return df
 
+
+
 class DataGenerator(tf.keras.utils.Sequence):
     def __init__(self, data, batch_size=6, dim=(256, 256), n_channels=3, shuffle=True):
         """
@@ -87,13 +89,14 @@ class DataGenerator(tf.keras.utils.Sequence):
         depth_map = cv2.cvtColor(depth_map, cv2.COLOR_BGR2RGB)
         depth_map = cv2.resize(depth_map, dsize=(256, 256), interpolation=cv2.INTER_CUBIC)
         depth_map = depth_map.astype('float32') / 255.0
+        depth_map = depth_map.mean(axis=2, keepdims=True)
 
         return image, depth_map
 
     def data_generation(self, batch):
 
         x = np.empty((self.batch_size, *self.dim, self.n_channels))
-        y = np.empty((self.batch_size, *self.dim, 3))
+        y = np.empty((self.batch_size, *self.dim, 1))
 
         for i, batch_id in enumerate(batch):
             x[i,], y[i,] = self.load(
