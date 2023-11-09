@@ -2,6 +2,39 @@ import tensorflow as tf
 from tensorflow.keras import layers
 import numpy as np
 import cv2
+import os
+import pandas as pd
+
+
+def load_data():
+    path = "./DS/Image"
+    img_filelist = []
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            if file == ".DS_Store":
+                continue
+            img_filelist.append(os.path.join(root, file))
+
+
+    img_filelist.sort()
+    path = "./DS/DepthMap"
+    depth_filelist = []
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            depth_filelist.append(os.path.join(root, file))
+
+    depth_filelist.sort()
+
+
+
+    data = {
+        "image": [x for x in img_filelist],
+        "depth": [x for x in depth_filelist],
+    }
+    df = pd.DataFrame(data)
+
+    df = df.sample(frac=1, random_state=42)
+    return df
 
 class DataGenerator(tf.keras.utils.Sequence):
     def __init__(self, data, batch_size=6, dim=(256, 256), n_channels=3, shuffle=True):
