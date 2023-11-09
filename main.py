@@ -1,22 +1,22 @@
 import os
 import sys
-
 import tensorflow as tf
 from tensorflow.keras import layers
-
 import pandas as pd
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-path = "/Users/yuanboli/Desktop/DS/Image/0.png"
+import dataGen
+
+path = "./DS/Image/0.png"
 img = cv2.imread(path)
 print(img.shape)
 
 # filename = 'savedImage.jpg'
 # cv2.imwrite(filename, img) 
 
-path = "/Users/yuanboli/Desktop/DS/Image"
+path = "./DS/Image"
 img_filelist = []
 for root, dirs, files in os.walk(path):
     for file in files:
@@ -26,8 +26,7 @@ for root, dirs, files in os.walk(path):
 
 
 img_filelist.sort()
-
-path = "/Users/yuanboli/Desktop/DS/DepthMap"
+path = "./DS/DepthMap"
 depth_filelist = []
 for root, dirs, files in os.walk(path):
     for file in files:
@@ -51,3 +50,8 @@ WIDTH = 256
 LR = 0.0002
 EPOCHS = 30
 BATCH_SIZE = 32
+
+
+visualize_samples = next(
+    iter(dataGen.DataGenerator(data=df, batch_size=6, dim=(HEIGHT, WIDTH)))
+)
