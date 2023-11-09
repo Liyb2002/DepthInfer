@@ -8,13 +8,7 @@ import cv2
 import matplotlib.pyplot as plt
 
 import dataGen
-
-path = "./DS/Image/0.png"
-img = cv2.imread(path)
-print(img.shape)
-
-# filename = 'savedImage.jpg'
-# cv2.imwrite(filename, img) 
+import visualize
 
 path = "./DS/Image"
 img_filelist = []
@@ -55,3 +49,7 @@ BATCH_SIZE = 32
 visualize_samples = next(
     iter(dataGen.DataGenerator(data=df, batch_size=6, dim=(HEIGHT, WIDTH)))
 )
+
+
+
+visualize.visualize_ds(visualize_samples)
