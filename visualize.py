@@ -2,6 +2,15 @@ import cv2
 import random
 import numpy as np
 
+def load_single_img_toPredict(path):
+    image = cv2.imread(path)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image = cv2.resize(image, dsize=(256, 256), interpolation=cv2.INTER_CUBIC)
+    image = image.astype('float32') / 255.0
+    reshaped_array = image[np.newaxis, ...]
+    return reshaped_array
+
+
 def visualize_ds(visualize_samples, num_samples = 5):
 
     image, depth = visualize_samples

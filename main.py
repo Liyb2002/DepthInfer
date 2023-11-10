@@ -14,7 +14,7 @@ import model
 HEIGHT = 256
 WIDTH = 256
 LR = 0.0002
-EPOCHS = 5
+EPOCHS = 30
 BATCH_SIZE = 32
 
 df = dataGen.load_data()
@@ -28,10 +28,10 @@ model = model.DepthEstimationModel()
 model.compile(optimizer)
 
 train_loader = dataGen.DataGenerator(
-    data=df[:100].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
+    data=df[:1500].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
 )
 validation_loader = dataGen.DataGenerator(
-    data=df[110:120].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
+    data=df[1500:].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
 )
 model.fit(
     train_loader,
@@ -39,9 +39,10 @@ model.fit(
     validation_data=validation_loader,
 )
 
+image_path = "./DS/Image/10.png"
+image = visualize.load_single_img_toPredict(image_path)
+predict = model.predict(image)
+visualize.visualize_result(predict)
 
-# path = "./DS/Image/10.png"
-# pred = model.predict(input)
-# cv2.imwrite("pred", image[index]*255.0) 
 
 model.save_weights('path_to_my_weights', save_format='tf')
