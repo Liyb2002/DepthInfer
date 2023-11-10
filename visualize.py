@@ -1,5 +1,6 @@
 import cv2 
 import random
+import numpy as np
 
 def visualize_ds(visualize_samples, num_samples = 5):
 
@@ -16,3 +17,12 @@ def visualize_ds(visualize_samples, num_samples = 5):
 
         cv2.imwrite(image_filename, image[index]*255.0) 
         cv2.imwrite(depth_filename, depth[index]*255.0) 
+
+def visualize_result(result):
+    result = result[0, :, :, :]
+    result = np.repeat(result, 3, axis=2)
+
+    print("result.shape", result.shape)
+    
+    filename = './vis/predict.png'
+    cv2.imwrite(filename, result*255.0) 

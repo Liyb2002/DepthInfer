@@ -46,10 +46,10 @@ image = cv2.imread(image_path)
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 image = cv2.resize(image, dsize=(256, 256), interpolation=cv2.INTER_CUBIC)
 image = image.astype('float32') / 255.0
-print("image.shape", image.shape)
 reshaped_array = image[np.newaxis, ...]
 
+#shape (1, 256, 256, 1)
 predict = model.predict(reshaped_array)
-cv2.imwrite("pred", predict*255.0) 
 
 
+visualize.visualize_result(predict)
