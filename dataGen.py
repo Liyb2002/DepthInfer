@@ -104,4 +104,5 @@ class DataGenerator(tf.keras.utils.Sequence):
                 self.data["depth"][batch_id],
             )
 
+        print("x.shape", x.shape)
         return x, y

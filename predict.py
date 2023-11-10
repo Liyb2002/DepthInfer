@@ -16,7 +16,7 @@ HEIGHT = 256
 WIDTH = 256
 LR = 0.0002
 EPOCHS = 2
-BATCH_SIZE = 32
+BATCH_SIZE = 5
 
 optimizer = tf.keras.optimizers.Adam(
     learning_rate=LR,
@@ -39,6 +39,17 @@ model.fit(
     validation_data=validation_loader,
 )
 
-print(model.summary())
+model.load_weights('path_to_my_weights')
 
-model.load_weights('path_to_my_weights.h5', by_name = True, skip_mismatch = True)
+image_path = "./DS/Image/10.png"
+image = cv2.imread(image_path)
+image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+image = cv2.resize(image, dsize=(256, 256), interpolation=cv2.INTER_CUBIC)
+image = image.astype('float32') / 255.0
+print("image.shape", image.shape)
+reshaped_array = image[np.newaxis, ...]
+
+predict = model.predict(reshaped_array)
+cv2.imwrite("pred", predict*255.0) 
+
+
