@@ -33,5 +33,5 @@ def visualize_result(result):
 
     print("result.shape", result.shape)
     
-    filename = './vis/predict.png'
+    filename = './vis/predict1.png'
     cv2.imwrite(filename, result*255.0) 
