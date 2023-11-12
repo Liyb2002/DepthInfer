@@ -17,7 +17,10 @@ LR = 0.0002
 EPOCHS = 30
 BATCH_SIZE = 32
 
-df = dataGen.load_data()
+scene_list = ['./DS/ZA_Extended/', './DS/ZA/', './DS/tree/', './DS/temple/', './DS/factory/']
+df = dataGen.load_data(scene_list)
+
+split = int(len(df)*0.8)
 
 optimizer = tf.keras.optimizers.Adam(
     learning_rate=LR,
@@ -28,10 +31,10 @@ model = model.DepthEstimationModel()
 model.compile(optimizer)
 
 train_loader = dataGen.DataGenerator(
-    data=df[:1500].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
+    data=df[:split].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
 )
 validation_loader = dataGen.DataGenerator(
-    data=df[1500:].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
+    data=df[split:].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
 )
 model.fit(
     train_loader,
@@ -45,4 +48,4 @@ predict = model.predict(image)
 visualize.visualize_result(predict)
 
 
-model.save_weights('path_to_my_weights', save_format='tf')
+model.save_weights('full_moedel', save_format='tf')

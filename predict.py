@@ -18,6 +18,9 @@ LR = 0.0002
 EPOCHS = 1
 BATCH_SIZE = 5
 
+scene_list = ['./DS/ZA/', './DS/tree/', './DS/temple/', './DS/factory/']
+df = dataGen.load_data(scene_list)
+
 optimizer = tf.keras.optimizers.Adam(
     learning_rate=LR,
     amsgrad=False,
@@ -26,7 +29,6 @@ model = model.DepthEstimationModel()
 
 model.compile(optimizer)
 
-df = dataGen.load_data()
 train_loader = dataGen.DataGenerator(
     data=df[:2].reset_index(drop="true"), batch_size=BATCH_SIZE, dim=(HEIGHT, WIDTH)
 )

@@ -6,30 +6,40 @@ import os
 import pandas as pd
 
 
-def load_data():
-    path = "./DS/Image"
-    img_filelist = []
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            if file == ".DS_Store":
-                continue
-            img_filelist.append(os.path.join(root, file))
+def load_data(scene_list):
 
+    all_image_filelist = []
+    all_depth_filelist = []
 
-    img_filelist.sort()
-    path = "./DS/DepthMap"
-    depth_filelist = []
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            depth_filelist.append(os.path.join(root, file))
+    for scene_path in scene_list:
+        path = scene_path + '/Image/'
+        img_filelist = []
+        for root, dirs, files in os.walk(path):
+            for file in files:
+                if file == ".DS_Store":
+                    continue
+                img_filelist.append(os.path.join(root, file))
+        img_filelist.sort()
+        all_image_filelist += img_filelist
 
-    depth_filelist.sort()
+        path = scene_path + "/DepthMap/"
+        depth_filelist = []
+        for root, dirs, files in os.walk(path):
+            for file in files:
+                if file == ".DS_Store":
+                    continue
+                depth_filelist.append(os.path.join(root, file))
 
+        depth_filelist.sort()
+        all_depth_filelist += depth_filelist
 
+        print("scene", scene_path, "image:", len(img_filelist), "depth:", len(depth_filelist))
+
+    print("total Dataset:", len(all_depth_filelist))
 
     data = {
-        "image": [x for x in img_filelist],
-        "depth": [x for x in depth_filelist],
+        "image": [x for x in all_image_filelist],
+        "depth": [x for x in all_depth_filelist],
     }
     df = pd.DataFrame(data)
 
