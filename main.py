@@ -14,7 +14,7 @@ import model
 HEIGHT = 256
 WIDTH = 256
 LR = 0.0002
-EPOCHS = 30
+EPOCHS = 8
 BATCH_SIZE = 32
 
 scene_list = ['./DS/ZA_Extended/', './DS/ZA/', './DS/tree/', './DS/temple/', './DS/factory/']
@@ -42,10 +42,10 @@ model.fit(
     validation_data=validation_loader,
 )
 
-image_path = "./DS/Image/10.png"
-image = visualize.load_single_img_toPredict(image_path)
-predict = model.predict(image)
-visualize.visualize_result(predict)
+# image_path = "./DS/Image/10.png"
+# image = visualize.load_single_img_toPredict(image_path)
+# predict = model.predict(image)
+# visualize.visualize_result(predict)
 
 
 model.save_weights('full_moedel', save_format='tf')

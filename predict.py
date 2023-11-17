@@ -43,7 +43,8 @@ model.fit(
 
 model.load_weights('path_to_my_weights')
 
-image_path = "./DS/Image/1889.png"
-image = visualize.load_single_img_toPredict(image_path)
-predict = model.predict(image)
-visualize.visualize_result(predict)
+print(model.summary())
+# image_path = "./testings/2.jpg"
+# image = visualize.load_single_img_toPredict(image_path)
+# predict = model.predict(image)
+# visualize.visualize_result(predict)
