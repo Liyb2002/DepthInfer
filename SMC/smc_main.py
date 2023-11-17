@@ -1,5 +1,6 @@
 import sys
 import read_file
+import generate
 
 if len(sys.argv) < 2:
     print("Usage: python main.py <file_path> ")
@@ -7,4 +8,6 @@ if len(sys.argv) < 2:
 
 file_path = sys.argv[1]
 
-_, generic_object_list, _, _ = read_file.read_object_file(file_path)
+visual_bridge_info, generic_object_list, _, _ = read_file.read_object_file(file_path)
+class_generate = generate.generate_helper(generic_object_list, visual_bridge_info)
+result_list = class_generate.smc_process()
