@@ -12,11 +12,18 @@ sum_depthMap = sum_depthMap.astype(float)
 smallest_element = np.min(sum_depthMap)
 smallest_element = smallest_element - 20
 
+cam = config.ortho_camera()
+sample_points = []
+
 for i in range (0, sum_depthMap.shape[0]):
     for j in range (0, sum_depthMap.shape[1]):
         if sum_depthMap[i][j] >720:
-          sum_depthMap[i][j] = 20
+          continue
         else:
-          sum_depthMap[i][j] = (sum_depthMap[i][j]- 540) * 0.05
+          dist = (sum_depthMap[i][j]- 540) * 0.05
+          sample_point = cam.get_position(np.array([i,j]), dist)
+          sample_points.append(sample_point)
 
-print("cam pos", config.camera_pos)
+
+
+
