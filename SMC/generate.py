@@ -1,5 +1,6 @@
 
 import particle
+import load_depthmap
 
 from copy import deepcopy
 import numpy as np
@@ -11,7 +12,6 @@ class generate_helper:
         self.generic_object_list = generic_object_list
         self.visual_bridge_info = visual_bridge_info
         self.particle_list = []
-
 
 
     def smc_process(self):
