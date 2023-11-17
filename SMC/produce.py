@@ -49,3 +49,19 @@ def execute_model(generic_object_list, start_obj, steps):
     production_list.pop(0)
     return production_list
 
+
+def opposite_direction(direction):
+    if direction == '+x':
+        return '-x'
+    if direction == '-x':
+        return '+x'
+    if direction == '+y':
+        return '-y'
+    if direction == '-y':
+        return '+y'
+    if direction == '+z':
+        return '-z'
+    if direction == '-z':
+        return '+z'
+    
+    return '+x'

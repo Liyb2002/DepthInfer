@@ -13,7 +13,8 @@ class Particle:
         self.procedural_objects.append(self.cur_obj)
 
     def run_step(self):
-        results = produce.execute_model(self.generic_object_list, self.cur_obj, 5)
+        self.procedural_objects = produce.execute_model(self.generic_object_list, self.cur_obj, 5)
+
 
 
 
