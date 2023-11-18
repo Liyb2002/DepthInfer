@@ -5,7 +5,7 @@ class rewards_calculator:
     def __init__(self):
         self.sampled_points = load_depthmap.load_depth_map()
 
-    def get_rewards(obj):
+    def get_rewards(self, obj):
 
         lower_x = obj.position[0] - obj.length[0]
         lower_y = obj.position[1] - obj.length[1]
@@ -13,18 +13,21 @@ class rewards_calculator:
         upper_y = obj.position[1] + obj.length[1]
 
         lower_j = int(lower_x / (5.0 / 256.0))
-        lower_i = int((5.0 - lower_y) / (5.0 / 256.0))
         upper_j = int(upper_x / (5.0 / 256.0))
-        upper_i = int((5.0 - upper_y) / (5.0 / 256.0))
+
+        lower_i = int((5.0 - upper_y) / (5.0 / 256.0))
+        upper_i = int((5.0 - lower_y) / (5.0 / 256.0))
 
         lower_depth = obj.position[2] - obj.length[2]
         upper_depth = obj.position[2] + obj.length[2]
         
         rewards = 0
+        print("i:", lower_i, "-", upper_i, "j:", lower_j, "-", upper_j)
 
         for i in range (lower_i, upper_i):
             for j in range (lower_j, upper_j):
                 cur_depth = self.sampled_points [i][j] 
+                # print("i", i, "j", j, "cur_depth", cur_depth)
                 if lower_depth <= cur_depth and cur_depth <= upper_depth:
                     rewards +=1 
         

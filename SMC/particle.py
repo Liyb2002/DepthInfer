@@ -16,7 +16,12 @@ class Particle:
     def run_step(self):
         self.procedural_objects = produce.execute_model(self.generic_object_list, self.cur_obj, 5)
 
-
+    def calc_score(self):
+        score = 0
+        for obj in self.procedural_objects:
+            score += self.rewards_calculator.get_rewards(obj)
+        
+        print("score", score)
 
 
 
