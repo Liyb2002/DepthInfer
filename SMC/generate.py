@@ -1,6 +1,7 @@
 
 import particle
 import load_depthmap
+import rewards
 
 from copy import deepcopy
 import numpy as np
@@ -12,6 +13,7 @@ class generate_helper:
         self.generic_object_list = generic_object_list
         self.visual_bridge_info = visual_bridge_info
         self.particle_list = []
+        self.rewards_calculator = rewards.rewards_calculator()
 
 
     def smc_process(self):

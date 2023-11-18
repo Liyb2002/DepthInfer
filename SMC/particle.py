@@ -4,9 +4,10 @@ import numpy as np
 import math
 
 class Particle:
-    def __init__(self, generic_object_list):
+    def __init__(self, generic_object_list, rewards_calculator):
         self.generic_object_list = generic_object_list
         self.procedural_objects = []
+        self.rewards_calculator = rewards_calculator
 
     def prepare_particle(self,intersection, start_type, connected_dir):
         self.cur_obj = start_obj(intersection, self.generic_object_list, start_type, connected_dir)
