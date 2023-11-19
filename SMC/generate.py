@@ -4,8 +4,11 @@ import load_depthmap
 import rewards
 import resample
 
+import class_dummy_object
+
 from copy import deepcopy
 import numpy as np
+from copy import deepcopy
 
 class generate_helper:
     def __init__(self, generic_object_list, visual_bridge_info):
@@ -18,24 +21,20 @@ class generate_helper:
 
 
     def smc_process(self):
-        
-        num_particles = 20
-        start_pos = np.array([1.11328125, 4.1015625, 2.4])
 
-        start_type = 1
-        connected_dir = ''
+        num_particles = 2000
+        start_obj = class_dummy_object.dummy_object(np.array([ 1.94, 3.25,0.7]), np.array([0.1,0.1,0.1]))
+
 
         for i in range(num_particles):
-            tempt_particle = class_particle.Particle(self.generic_object_list, self.rewards_calculator, i)
-            tempt_particle.prepare_particle(start_pos, start_type, connected_dir)
+            tempt_particle = class_particle.Particle(start_obj, deepcopy(self.rewards_calculator))
             self.particle_list.append(tempt_particle)
 
-        for i in range (20):
+        for i in range (40):
             print("step", i)
             for i in range(num_particles):
                 tempt_particle = self.particle_list[i]
                 tempt_particle.run_step()
-                tempt_particle.calc_score()
                 # print("tempt_particle.score", tempt_particle.score)
             
             self.particle_list = resample.resample(self.particle_list)   

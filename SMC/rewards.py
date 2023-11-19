@@ -7,10 +7,10 @@ class rewards_calculator:
 
     def get_rewards(self, obj):
 
-        lower_x = obj.position[0] - obj.length[0]
-        lower_y = obj.position[1] - obj.length[1]
-        upper_x = obj.position[0] + obj.length[0]
-        upper_y = obj.position[1] + obj.length[1]
+        lower_x = obj.position[0] - obj.scope[0]
+        lower_y = obj.position[1] - obj.scope[1]
+        upper_x = obj.position[0] + obj.scope[0]
+        upper_y = obj.position[1] + obj.scope[1]
 
         lower_j = int(lower_x / (5.0 / 256.0))
         upper_j = int(upper_x / (5.0 / 256.0))
@@ -18,8 +18,8 @@ class rewards_calculator:
         lower_i = int((5.0 - upper_y) / (5.0 / 256.0))
         upper_i = int((5.0 - lower_y) / (5.0 / 256.0))
 
-        lower_depth = obj.position[2] - obj.length[2]
-        upper_depth = obj.position[2] + obj.length[2]
+        lower_depth = obj.position[2] - obj.scope[2]
+        upper_depth = obj.position[2] + obj.scope[2]
         
         rewards = 0
 
@@ -34,7 +34,8 @@ class rewards_calculator:
                 # print("i:", i, "j:", j, "depth:", cur_depth)
 
                 if lower_depth <= cur_depth and cur_depth <= upper_depth:
+                    self.sampled_points[i][j] = 720
                     rewards +=1 
         
         # print("rewards", rewards)
-        return rewards
+        return rewards 

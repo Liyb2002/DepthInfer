@@ -1,24 +1,21 @@
     
 import json
 
-def write_proceudral_objects (proceudral_objects, file_name = './three/reconstruct.json'):
+def write_proceudral_objects (dummy_object, file_name = './three/reconstruct.json'):
     result = []
 
-    for obj in proceudral_objects:
+    for obj in dummy_object:
         pos = list(obj.position)
         data = {'obj':
-            {'type': obj.type,
+            {
             'start_x': float(obj.position[0]),
             'start_y': float(obj.position[1]),
             'start_z': float(obj.position[2]),
-            'scale_x': float(obj.length[0]),
-            'scale_y': float(obj.length[1]),
-            'scale_z': float(obj.length[2]),
-            'rotation_x' : float(obj.rotation[0]),
-            'rotation_y' : float(obj.rotation[1]),
-            'rotation_z' : float(obj.rotation[2]),
-            'group': float(obj.group)}
-                }
+            'scale_x': float(obj.scope[0]),
+            'scale_y': float(obj.scope[1]),
+            'scale_z': float(obj.scope[2])
+            }
+        }
         result.append(data)
 
     with open(file_name, 'w') as f:

@@ -1,49 +1,40 @@
-import produce
+import create_dummy
 import procedural_objects
 import numpy as np
 import math
 
 class Particle:
-    def __init__(self, generic_object_list, rewards_calculator, id):
-        self.generic_object_list = generic_object_list
+    def __init__(self, start_obj, rewards_calculator):
         self.procedural_objects = []
+        self.procedural_objects.append(start_obj)
         self.rewards_calculator = rewards_calculator
         self.score = 0
-        self.id = id
-
-    def prepare_particle(self,intersection, start_type, connected_dir):
-        self.cur_obj = start_obj(intersection, self.generic_object_list, start_type, connected_dir)
-        self.procedural_objects.append(self.cur_obj)
 
     def run_step(self):
-        new_obj = produce.execute_model(self.generic_object_list, self.cur_obj, 1)
-        self.procedural_objects += new_obj
+        new_obj = create_dummy.create_dummy_object(self.procedural_objects[-1])
+        self.calc_score(new_obj)
+        self.check_collision(new_obj)
+        self.procedural_objects.append(new_obj)
 
-        self.cur_obj = self.procedural_objects[-1]
 
-    def calc_score(self):
-        score = 0
+    def calc_score(self, new_obj):
+        reward = self.rewards_calculator.get_rewards(new_obj)
+        self.score = 0.2 * self.score + reward * reward
+
+
+    def check_collision(self, new_object):
+        new_aabb = new_object.get_aabb()
         for obj in self.procedural_objects:
-            rewards = self.rewards_calculator.get_rewards(obj)
-            score += rewards
+            obj_aabb = obj.get_aabb()
+            if (new_aabb["min_x"] <= obj_aabb["max_x"] and
+                new_aabb["max_x"] >= obj_aabb["min_x"] and
+                new_aabb["min_y"] <= obj_aabb["max_y"] and
+                new_aabb["max_y"] >= obj_aabb["min_y"] and
+                new_aabb["min_z"] <= obj_aabb["max_z"] and
+                new_aabb["max_z"] >= obj_aabb["min_z"]):
+
+                self.score = 0
         
-        self.score = score
+        
 
-
-
-def start_obj(start_pos, generic_object_list, start_type, connected_dir):
-
-    cur_type = start_type
-    start_scope = generic_object_list[cur_type].scope
-    gen_hash = generic_object_list[cur_type].generate_hash()
-    next_rotation = generic_object_list[cur_type].rotation
-    cur_obj = procedural_objects.Procedural_object(cur_type, start_pos, start_scope, gen_hash,next_rotation, np.array([0,0,0]))
-    cur_obj_x = cur_obj.length[0]
-    cur_obj_y = cur_obj.length[1]
-    cur_obj_z = cur_obj.length[2]
-    update_pos = np.array([cur_obj_x, cur_obj_y, cur_obj_z])
-    cur_obj.arbitrary_set_position(start_pos - update_pos)
-    cur_obj.add_connected(connected_dir)
-
-    return cur_obj
 
