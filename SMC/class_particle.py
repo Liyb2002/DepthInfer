@@ -8,20 +8,23 @@ class Particle:
         self.generic_object_list = generic_object_list
         self.procedural_objects = []
         self.rewards_calculator = rewards_calculator
+        self.score = 0
 
     def prepare_particle(self,intersection, start_type, connected_dir):
         self.cur_obj = start_obj(intersection, self.generic_object_list, start_type, connected_dir)
         self.procedural_objects.append(self.cur_obj)
 
     def run_step(self):
-        self.procedural_objects = produce.execute_model(self.generic_object_list, self.cur_obj, 5)
+        self.procedural_objects += produce.execute_model(self.generic_object_list, self.cur_obj, 1)
 
     def calc_score(self):
+        
         score = 0
         for obj in self.procedural_objects:
-            score += self.rewards_calculator.get_rewards(obj)
+            rewards = self.rewards_calculator.get_rewards(obj)
+            score += rewards
         
-        print("score", score)
+        self.score = score
 
 
 

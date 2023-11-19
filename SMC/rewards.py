@@ -22,13 +22,15 @@ class rewards_calculator:
         upper_depth = obj.position[2] + obj.length[2]
         
         rewards = 0
-        print("i:", lower_i, "-", upper_i, "j:", lower_j, "-", upper_j)
+        # print("i:", lower_i, "-", upper_i, "j:", lower_j, "-", upper_j, "depth:", lower_depth, "-", upper_depth)
 
         for i in range (lower_i, upper_i):
             for j in range (lower_j, upper_j):
-                cur_depth = self.sampled_points [i][j] 
-                # print("i", i, "j", j, "cur_depth", cur_depth)
+                cur_depth = self.sampled_points[i][j]
+                # print("i:", i, "j:", j, "depth:", cur_depth)
+
                 if lower_depth <= cur_depth and cur_depth <= upper_depth:
                     rewards +=1 
         
+        # print("rewards", rewards)
         return rewards

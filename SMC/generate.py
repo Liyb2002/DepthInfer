@@ -1,7 +1,8 @@
 
-import particle
+import class_particle
 import load_depthmap
 import rewards
+import resample
 
 from copy import deepcopy
 import numpy as np
@@ -18,21 +19,27 @@ class generate_helper:
 
     def smc_process(self):
         
-        num_particles = 10
-        start_pos = np.array([1, 2, 7])
+        num_particles = 100
+        start_pos = np.array([1.11328125, 4.1015625, 2.5])
+
         start_type = 1
-        connected_dir = '-x'
+        connected_dir = ''
 
         for i in range(num_particles):
-            tempt_particle = particle.Particle(self.generic_object_list, self.rewards_calculator)
+            tempt_particle = class_particle.Particle(self.generic_object_list, self.rewards_calculator)
             tempt_particle.prepare_particle(start_pos, start_type, connected_dir)
             self.particle_list.append(tempt_particle)
 
-        
-        for i in range(len(self.particle_list)):
-            tempt_particle = self.particle_list[i]
-            tempt_particle.run_step()
-            tempt_particle.calc_score()     
+        for i in range (20):
+            print("step", i)
+            for tempt_particle in self.particle_list:
+                tempt_particle.run_step()
+                tempt_particle.calc_score()
+                # print("tempt_particle.score", tempt_particle.score)
+            
+            self.particle_list = resample.resample(self.particle_list)   
 
-        return self.particle_list[0]
+        
+        highest_score_particle = max(self.particle_list, key=lambda p: p.score)
+        print("highest_score_particle", highest_score_particle.score)
 

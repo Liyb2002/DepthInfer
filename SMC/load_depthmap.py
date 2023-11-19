@@ -20,11 +20,10 @@ def load_depth_map():
         if sum_depthMap[i][j] >720:
           continue
         else:
-          sum_depthMap[i][j] = (sum_depthMap[i][j]-540) * 0.05
-
-
-  return sum_depthMap
+          sum_depthMap[i][j] = (sum_depthMap[i][j]-540) * 0.02
+  
   # output_sample_pts(sum_depthMap, file_name)
+  return sum_depthMap
 
 
 
@@ -60,3 +59,5 @@ def output_sample_pts (sum_depthMap, file_name):
   with open(file_name, 'w') as f:
       json.dump(result, f, indent=2)
 
+
+# load_depth_map()
