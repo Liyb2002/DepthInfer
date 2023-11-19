@@ -2,18 +2,23 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import json
+from scipy.ndimage import zoom
 
 import config
 
 def load_depth_map():
-  detph_map_path = './depthMap/predict.png'
+  detph_map_path = './depthMap/10.jpg'
   file_name = './three/sample_points.json'
   depth_map = cv2.imread(detph_map_path)
 
   sum_depthMap = np.sum(depth_map, axis=2, keepdims=True)
   sum_depthMap = sum_depthMap.astype(float)
+  sum_depthMap = resize_depth_map(sum_depthMap)
+  
   smallest_element = np.min(sum_depthMap)
   smallest_element = smallest_element - 20
+  
+
 
   for i in range (0, sum_depthMap.shape[0]):
     for j in range (0, sum_depthMap.shape[1]):
@@ -21,8 +26,9 @@ def load_depth_map():
           continue
         else:
           sum_depthMap[i][j] = (sum_depthMap[i][j]-540) * 0.02
-  
-  # output_sample_pts(sum_depthMap, file_name)
+          # print("sum_depthMap[i][j]",i, j, sum_depthMap[i][j] )
+
+  output_sample_pts(sum_depthMap, file_name)
   return sum_depthMap
 
 
@@ -60,4 +66,12 @@ def output_sample_pts (sum_depthMap, file_name):
       json.dump(result, f, indent=2)
 
 
-# load_depth_map()
+def resize_depth_map(input_array):
+  input_array_shape = input_array.shape
+  zoom_factor_x = 256 / input_array_shape[0]
+  zoom_factor_y = 256 / input_array_shape[1]
+  resized_array = zoom(input_array, (zoom_factor_x, zoom_factor_y, 1), order=1)
+
+  return resized_array
+
+load_depth_map()
