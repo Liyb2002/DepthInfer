@@ -20,7 +20,7 @@ class generate_helper:
     def smc_process(self):
         
         num_particles = 100
-        start_pos = np.array([1.11328125, 4.1015625, 2.5])
+        start_pos = np.array([1.11328125, 4.1015625, 2.4])
 
         start_type = 1
         connected_dir = ''
@@ -30,7 +30,7 @@ class generate_helper:
             tempt_particle.prepare_particle(start_pos, start_type, connected_dir)
             self.particle_list.append(tempt_particle)
 
-        for i in range (20):
+        for i in range (10):
             print("step", i)
             for tempt_particle in self.particle_list:
                 tempt_particle.run_step()
@@ -41,5 +41,5 @@ class generate_helper:
 
         
         highest_score_particle = max(self.particle_list, key=lambda p: p.score)
-        print("highest_score_particle", highest_score_particle.score)
+        return highest_score_particle.procedural_objects
 

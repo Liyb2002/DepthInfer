@@ -18,8 +18,6 @@ def load_depth_map():
   smallest_element = np.min(sum_depthMap)
   smallest_element = smallest_element - 20
   
-
-
   for i in range (0, sum_depthMap.shape[0]):
     for j in range (0, sum_depthMap.shape[1]):
         if sum_depthMap[i][j] >720:
@@ -28,7 +26,7 @@ def load_depth_map():
           sum_depthMap[i][j] = (sum_depthMap[i][j]-540) * 0.02
           # print("sum_depthMap[i][j]",i, j, sum_depthMap[i][j] )
 
-  output_sample_pts(sum_depthMap, file_name)
+  # output_sample_pts(sum_depthMap, file_name)
   return sum_depthMap
 
 
@@ -74,4 +72,4 @@ def resize_depth_map(input_array):
 
   return resized_array
 
-load_depth_map()
+# load_depth_map()
