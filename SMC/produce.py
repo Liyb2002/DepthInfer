@@ -11,7 +11,7 @@ def execute_model(generic_object_list, start_obj, steps):
     #processing
     count = 0
     not_end = True
-    while(count < steps or not_end):
+    while(count < steps):
 
         tempt_count = count
         next_type = None
@@ -40,10 +40,6 @@ def execute_model(generic_object_list, start_obj, steps):
         production_list.append(next_obj)
         cur_obj = next_obj
 
-        if next_generic_obj.canTerminate == "False":
-            not_end = True
-        else:
-            not_end = False
     
         count += 1
     production_list.pop(0)

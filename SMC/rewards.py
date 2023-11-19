@@ -22,6 +22,10 @@ class rewards_calculator:
         upper_depth = obj.position[2] + obj.length[2]
         
         rewards = 0
+
+        if lower_i<0 or lower_j<0 or upper_i>256 or upper_j>256:
+            return 0
+            
         # print("i:", lower_i, "-", upper_i, "j:", lower_j, "-", upper_j, "depth:", lower_depth, "-", upper_depth)
 
         for i in range (lower_i, upper_i):
