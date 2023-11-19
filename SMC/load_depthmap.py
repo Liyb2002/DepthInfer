@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import json
 from scipy.ndimage import zoom
 
+import rotate_samples
 import config
 
 def load_depth_map():
@@ -23,10 +24,10 @@ def load_depth_map():
         if sum_depthMap[i][j] >720:
           continue
         else:
-          sum_depthMap[i][j] = (sum_depthMap[i][j]-540) * 0.02
+          sum_depthMap[i][j] = (sum_depthMap[i][j]-540) * 0.005
           # print("sum_depthMap[i][j]",i, j, sum_depthMap[i][j] )
 
-  # output_sample_pts(sum_depthMap, file_name)
+  output_sample_pts(sum_depthMap, file_name)
   return sum_depthMap
 
 
@@ -35,6 +36,7 @@ def load_depth_map():
 def output_sample_pts (sum_depthMap, file_name):
   sample_points = []
   cam = config.ortho_camera()
+
 
   for i in range (0, sum_depthMap.shape[0]):
     for j in range (0, sum_depthMap.shape[1]):
@@ -48,6 +50,7 @@ def output_sample_pts (sum_depthMap, file_name):
           # sample_point = cam.get_position(np.array([i,j]), dist)
           sample_points.append(sample_point)
 
+  # sample_points = rotate_samples.main_rotate(sample_points)
 
   result = []  
   for pt in sample_points:
@@ -72,4 +75,4 @@ def resize_depth_map(input_array):
 
   return resized_array
 
-# load_depth_map()
+load_depth_map()
