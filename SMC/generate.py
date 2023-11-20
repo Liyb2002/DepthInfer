@@ -22,26 +22,31 @@ class generate_helper:
 
     def smc_process(self):
 
-        num_particles = 2000
-        start_obj = class_dummy_object.dummy_object(np.array([ 1.94, 3.25,0.7]), np.array([0.1,0.1,0.1]))
+        num_particles = 500
+        start_obj = class_dummy_object.dummy_object(np.array([ 1.78, 3.47, 2.04]), np.array([0.1,0.1,0.1]))
 
 
         for i in range(num_particles):
             tempt_particle = class_particle.Particle(start_obj, deepcopy(self.rewards_calculator))
             self.particle_list.append(tempt_particle)
 
-        for i in range (40):
-            print("step", i)
+        step = 0
+        while(True):
+            step += 1
+            print("step", step)
             for i in range(num_particles):
                 tempt_particle = self.particle_list[i]
                 tempt_particle.run_step()
                 # print("tempt_particle.score", tempt_particle.score)
             
             self.particle_list = resample.resample(self.particle_list)   
-
+            highest_hit_particle = max(self.particle_list, key=lambda p: p.hit)
+            print("highest hit", highest_hit_particle.hit)
+            if highest_hit_particle.hit > 5500:
+                break
         
 
-        highest_score_particle = max(self.particle_list, key=lambda p: p.score)
-        print("high score", highest_score_particle.score)
-        return highest_score_particle.procedural_objects
+        highest_hit_particle = max(self.particle_list, key=lambda p: p.hit)
+
+        return highest_hit_particle.procedural_objects
 

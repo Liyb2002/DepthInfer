@@ -8,6 +8,7 @@ class Particle:
         self.procedural_objects = []
         self.procedural_objects.append(start_obj)
         self.rewards_calculator = rewards_calculator
+        self.hit = 0
         self.score = 0
 
     def run_step(self):
@@ -19,7 +20,12 @@ class Particle:
 
     def calc_score(self, new_obj):
         reward = self.rewards_calculator.get_rewards(new_obj)
-        self.score = 0.2 * self.score + reward * reward
+        self.hit += reward
+        self.score = 0.5 * self.score + reward * reward
+
+        if reward < 3:
+            self.score = 0
+        
 
 
     def check_collision(self, new_object):
