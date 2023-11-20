@@ -23,8 +23,8 @@ class generate_helper:
     def smc_process(self):
 
         num_particles = 500
-        start_obj = class_dummy_object.dummy_object(np.array([ 1.78, 3.47, 2.04]), np.array([0.1,0.1,0.1]))
-
+        _, vb = load_depthmap.load_depth_map()
+        start_obj = class_dummy_object.dummy_object(np.array([vb[0], vb[1], vb[2]]), np.array([0.1,0.1,0.1]))
 
         for i in range(num_particles):
             tempt_particle = class_particle.Particle(start_obj, deepcopy(self.rewards_calculator))

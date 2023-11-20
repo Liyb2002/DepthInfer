@@ -3,7 +3,7 @@ import procedural_objects
 
 class rewards_calculator:
     def __init__(self):
-        self.sampled_points = load_depthmap.load_depth_map()
+        self.sampled_points, _ = load_depthmap.load_depth_map()
 
     def get_rewards(self, obj):
 

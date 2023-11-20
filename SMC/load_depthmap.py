@@ -25,17 +25,32 @@ def load_depth_map():
           continue
         else:
           sum_depthMap[i][j] = (sum_depthMap[i][j]-smallest_element) * 0.02
-          # print("sum_depthMap[i][j]",i, j, sum_depthMap[i][j] )
 
-  output_sample_pts(sum_depthMap, file_name)
-  return sum_depthMap
+  # sample_points = output_sample_pts(sum_depthMap, file_name)
+  sample_points = nonWriting_sample_pts(sum_depthMap, file_name)
+  vb = find_vb(sample_points)
+  return sum_depthMap, vb
 
 
+def nonWriting_sample_pts (sum_depthMap, file_name):
+  sample_points = []
+
+  for i in range (0, sum_depthMap.shape[0]):
+    for j in range (0, sum_depthMap.shape[1]):
+        if sum_depthMap[i][j] >720:
+          continue
+        else:
+          dist = sum_depthMap[i][j]
+          pos_x = j * (5.0 / 256.0)
+          pos_y = 5.0 - (i * (5.0 / 256.0))
+          sample_point = np.array([pos_x, pos_y, dist[0]])
+          sample_points.append(sample_point)
+    
+  return sample_points
 
 
 def output_sample_pts (sum_depthMap, file_name):
   sample_points = []
-  cam = config.ortho_camera()
 
 
   for i in range (0, sum_depthMap.shape[0]):
@@ -47,10 +62,7 @@ def output_sample_pts (sum_depthMap, file_name):
           pos_x = j * (5.0 / 256.0)
           pos_y = 5.0 - (i * (5.0 / 256.0))
           sample_point = np.array([pos_x, pos_y, dist[0]])
-          # sample_point = cam.get_position(np.array([i,j]), dist)
           sample_points.append(sample_point)
-
-  # sample_points = rotate_samples.main_rotate(sample_points)
 
   result = []  
   for pt in sample_points:
@@ -65,6 +77,8 @@ def output_sample_pts (sum_depthMap, file_name):
 
   with open(file_name, 'w') as f:
       json.dump(result, f, indent=2)
+    
+  return sample_points
 
 
 def resize_depth_map(input_array):
@@ -75,4 +89,15 @@ def resize_depth_map(input_array):
 
   return resized_array
 
-load_depth_map()
+
+def find_vb(sample_points):
+  max_diff = 0
+  vb = [0,0,0]
+  for i in range (1, len(sample_points)):
+    diff = sample_points[i][2] - sample_points[i-1][2]
+    if diff > max_diff:
+      max_diff = diff
+      vb = sample_points[i-1]
+  
+  return vb
+
