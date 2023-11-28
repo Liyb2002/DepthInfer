@@ -45,7 +45,7 @@
 	document.body.appendChild( renderer.domElement );
 
 	scene = new THREE.Scene();
-	scene.background = new THREE.Color( 0x81ebc6 );
+	scene.background = new THREE.Color( 0xffffff );
 
 
 	const left = -10.2, right = 10.2, top2 = 10.4, bottom = -10.4, near = 0.01, far = 100;
@@ -104,7 +104,7 @@ async function load_info(){
 	const loader = new THREE.FileLoader();
 	loader.load(
 	// resource URL
-	'./reconstruct.json',
+	'./10.json',
 	// onLoad callback
 	function ( data ) {
 		// output the text to the console

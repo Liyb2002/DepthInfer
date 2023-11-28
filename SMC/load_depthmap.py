@@ -22,7 +22,7 @@ def load_depth_map():
   for i in range (0, sum_depthMap.shape[0]):
     for j in range (0, sum_depthMap.shape[1]):
         if sum_depthMap[i][j] >720:
-          continue
+          sum_depthMap[i][j] = 720
         else:
           sum_depthMap[i][j] = (sum_depthMap[i][j]-smallest_element) * 0.02
 

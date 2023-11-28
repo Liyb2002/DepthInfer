@@ -12,3 +12,7 @@ def random_offset():
         return np.random.uniform(-0.2, -0.1)
 
     return np.random.uniform(0.1, 0.2)   
+
+def create_target_dummy(cur_dummy_obj, next_pos):
+    new_obj = class_dummy_object.dummy_object(cur_dummy_obj.position + next_pos, cur_dummy_obj.scope)
+    return new_obj

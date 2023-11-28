@@ -38,4 +38,4 @@ class rewards_calculator:
                     rewards +=1 
         
         # print("rewards", rewards)
-        return rewards 
+        return rewards
