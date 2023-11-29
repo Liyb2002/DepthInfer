@@ -13,8 +13,8 @@ def rotation_matrix_from_vectors(vec1, vec2):
 
 
 def main_rotate(point_cloud):
-    original_view_vector = np.array([0, 0, 5]) - np.array([5, 5, 5])
-    new_view_vector = np.array([5, 5, 5]) - np.array([5, 5, 5])
+    original_view_vector = np.array([0, 0, 5]) - np.array([0, 0, 0])
+    new_view_vector = np.array([5, 5, 5]) - np.array([0, 0, 0])
 
     # Calculate the rotation matrix
     rot_matrix = rotation_matrix_from_vectors(original_view_vector, new_view_vector)

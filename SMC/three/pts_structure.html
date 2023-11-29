@@ -51,7 +51,7 @@
 	const left = -10.2, right = 10.2, top2 = 10.4, bottom = -10.4, near = 0.01, far = 100;
 	camera = new THREE.OrthographicCamera(left, right, top2, bottom, near, far);
 
-	camera.position.set( 0, 0, 5 );
+	camera.position.set( 5, 5, 5 );
 
 	const controls = new OrbitControls( camera, renderer.domElement );
 	controls.addEventListener( 'change', render ); // use only if there is no animation loop
@@ -189,6 +189,10 @@ function displaypts() {
 
 
 var cube = new THREE.Mesh( geometry, material );
+// var a = cube.clone();
+// a.position.set(4.4,4.4,4.4);
+// a.scale.set(0.1,0.1,0.1);
+// scene.add(a.clone());
 
 
 function displaypos() {
