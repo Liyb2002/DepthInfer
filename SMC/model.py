@@ -6,9 +6,10 @@ import numpy as np
 import load_depthmap
 
 def make_prediction(sampled_points, geometry_list):
-    process_inputs(sampled_points, geometry_list, geometry_list[-1])
+    points = process_inputs(sampled_points, geometry_list, geometry_list[-1])
 
     return np.array([-1,-1,-1])
+
 
 def process_inputs(sampled_points, geometry_list, last_geometry, dist = [0.1, 0.2]):
 
@@ -18,8 +19,8 @@ def process_inputs(sampled_points, geometry_list, last_geometry, dist = [0.1, 0.
     last_x_TwoD = int(last_x / (5.0 / 256.0))
     last_y_TwoD = int((5.0 - last_y) / (5.0 / 256.0))
 
-    lower_bound_dist = int(dist[0] / (5.0 / 256.0))
-    upper_bound_dist = int(dist[1] / (5.0 / 256.0))
+    lower_bound_dist = int( (dist[0] - last_geometry.scope[0]) / (5.0 / 256.0))
+    upper_bound_dist = int( (dist[1] + last_geometry.scope[0]) / (5.0 / 256.0))
 
     smaller_z = last_geometry.position[2] - dist[1]
     larger_z = last_geometry.position[2] + dist[1]
@@ -35,5 +36,6 @@ def process_inputs(sampled_points, geometry_list, last_geometry, dist = [0.1, 0.
             if sampled_points[pt[0]][pt[1]] > smaller_z and sampled_points[pt[0]][pt[1]] < larger_z:
                 points.append(pt)
     
-    print("len", len(points))
+    # print(len(points))
+    return points 
     

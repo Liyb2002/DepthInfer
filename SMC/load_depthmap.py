@@ -26,8 +26,8 @@ def load_depth_map():
         else:
           sum_depthMap[i][j] = (sum_depthMap[i][j]-smallest_element) * 0.02
 
-  # sample_points = output_sample_pts(sum_depthMap, file_name)
-  sample_points = nonWriting_sample_pts(sum_depthMap, file_name)
+  sample_points = output_sample_pts(sum_depthMap, file_name)
+  # sample_points = nonWriting_sample_pts(sum_depthMap, file_name)
   vb = find_vb(sample_points)
   return sum_depthMap, vb
 
@@ -51,6 +51,7 @@ def nonWriting_sample_pts (sum_depthMap, file_name):
 
 def output_sample_pts (sum_depthMap, file_name):
   sample_points = []
+  cam = config.ortho_camera()
 
 
   for i in range (0, sum_depthMap.shape[0]):
